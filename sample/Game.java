@@ -18,14 +18,12 @@ import java.util.Random;
  * @author Quintin VanBooven
  * This deals with all aspects of the game.
  */
-public class Game implements EventHandler<KeyEvent>{
+public class Game{
 
     private Pane pane;
     private final static List<String> words = Main.getList();
     private final List<String> wrongLettersList = new ArrayList<>();
     private final List<String> rightLettersList = new ArrayList<>();
-    private final ArrayList<String> correct = new ArrayList<>();
-    private final Label right = new Label("");
     private static int guessNum = 0;
     private String word;
 
@@ -51,25 +49,89 @@ public class Game implements EventHandler<KeyEvent>{
         rightLettersList.clear();
         word = words.get(random.nextInt(words.size()));
         System.out.println(word);
+        ArrayList<String> correct = new ArrayList<>();
         Label wrongLetters = new Label("Wrong letters guess: ");
         Label rightLetters = new Label("Right letters guessed: ");
+        wrongLetters.setLayoutY(30);
+        pane.getChildren().addAll(wrongLetters, rightLetters);
+        Label right = new Label("");
         pane.getChildren().add(right);
         correct.add(makeStringtoLength(word));
-        wrongLetters.setLayoutY(30);
-        TextArea textArea = new TextArea("Press a letter");
-        textArea.setLayoutY(60);
-        textArea.setMaxWidth(100);
-        textArea.setMaxHeight(10);
-        Button button = new Button("Guess");
-        button.setLayoutY(100);
-        button.setVisible(true);
-        pane.getChildren().addAll(wrongLetters, rightLetters,button);
-        pane.setOnKeyPressed(this);
+        pane.setVisible(true);
+        pane.setOnKeyPressed(event -> {
+            String text = event.getText();
+            if(text.equalsIgnoreCase(" "))
+                return;
+            if(word.toLowerCase().contains(text.toLowerCase())) {
+                if(rightLettersList.contains(text.toLowerCase()))
+                    return;
+                for(int i = 0; i < word.toCharArray().length; i++){
+                    if(text.equalsIgnoreCase(String.valueOf(word.toCharArray()[i])))
+                        rightLettersList.add(String.valueOf(word.toCharArray()[i]));
+                }
+                correct.set(0,findLetters(word,text, correct.get(0)));
+                System.out.println(correct.get(0));
+                rightLettersList.clear();
+                rightLettersList.add(correct.get(0));
+                System.out.println(rightLettersList.get(0));
+                right.setText(" "+rightLettersList.get(0));
+                right.setLayoutY(0);
+                right.setLayoutX(115);
+                if(rightLettersList.get(0).equalsIgnoreCase(word)){
+                    Label label = new Label("YOU WON THE WORD WAS "+ word.toUpperCase()+"\n PRESS ENTER TO PLAY AGAIN");
+                    label.setFont(Font.font("BOLD", FontWeight.BOLD,20));
+                    label.setLayoutX(150);
+                    label.setLayoutY(300);
+                    pane.getChildren().add(label);
+                }
+            }
+            else{
+                if(guessNum>6)
+                    return;
+                if(wrongLettersList.contains(text.toLowerCase()))
+                    return;
+                wrongLettersList.add(text.toLowerCase());
+                Label wrong = new Label("");
+                wrong.setText(wrongLettersList.toString().replace("[","").replace("]",""));
+                wrong.setLayoutY(30);
+                wrong.setLayoutX(115);
+                pane.getChildren().add(wrong);
+                switch (guessNum){
+                    case 0:
+                        pane.getChildren().add(Man.drawHead());
+                        break;
+                    case 1:
+                        pane.getChildren().add(Man.drawBody());
+                        break;
+                    case 2:
+                        pane.getChildren().add(Man.drawLeftArm());
+                        break;
+                    case 3:
+                        pane.getChildren().add(Man.drawRightArm());
+                        break;
+                    case 4:
+                        pane.getChildren().add(Man.drawLeftLeg());
+                        break;
+                    case 5:
+                        pane.getChildren().add(Man.drawRightLeg());
+                        break;
+                    case 6:
+                        Label label = new Label("YOU LOST THE\n WORD WAS "+word.toUpperCase());
+                        label.setFont(Font.font("BOLD", FontWeight.BOLD,20));
+                        label.setLayoutX(150);
+                        label.setLayoutY(300);
+                        pane.getChildren().add(label);
+                        return;
+                }
+                guessNum++;
+            }
+        });
         pane.getChildren().addAll(Man.getThings());
 
         //pane.getChildren().add(0, textArea);
     }
 
+    /*
     @Override
     public void handle(KeyEvent event){
         System.out.println("Preesedsd");
@@ -139,7 +201,7 @@ public class Game implements EventHandler<KeyEvent>{
             }
             guessNum++;
         }
-    }
+    }*/
 
 
     /**
