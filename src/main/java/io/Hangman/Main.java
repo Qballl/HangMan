@@ -1,14 +1,11 @@
-package sample;
+package io.Hangman;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +32,9 @@ public class Main extends Application {
 
     public static List<String> getList(){
         List<String> words = new ArrayList<>();
-        try(BufferedReader reader = new BufferedReader(new FileReader(new File("Words.txt")))) {
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(Main.class.getClassLoader().getResourceAsStream("Words.txt")))){
             reader.lines().forEach(words::add);
-        }catch (IOException e){
+        }catch (IOException  e){
             e.printStackTrace();
         }
         return words;

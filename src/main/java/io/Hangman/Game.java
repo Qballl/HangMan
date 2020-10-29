@@ -1,6 +1,7 @@
-package sample;
+package io.Hangman;
 
 import javafx.event.*;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -9,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,6 @@ public class Game{
      */
     public Game(Pane pane){
         this.pane = pane;
-
     }
 
     /**
@@ -58,6 +59,14 @@ public class Game{
         pane.getChildren().add(right);
         correct.add(makeStringtoLength(word));
         pane.setVisible(true);
+        Button justToMakeItWork = new Button();
+        justToMakeItWork.resize(0,0);
+        justToMakeItWork.setLayoutY(600);
+        justToMakeItWork.setLayoutX(0);
+        pane.getChildren().add(justToMakeItWork);
+        Label info = new Label("Press a key to guess");
+        info.setLayoutY(60);
+        pane.getChildren().add(info);
         pane.setOnKeyPressed(event -> {
             String text = event.getText();
             if(text.equalsIgnoreCase(" "))

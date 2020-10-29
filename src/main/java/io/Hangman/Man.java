@@ -1,4 +1,4 @@
-package sample;
+package io.Hangman;
 
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
