@@ -47,6 +47,8 @@ public class Game {
         wrongLettersList.clear();
         rightLettersList.clear();
         word = words.get(random.nextInt(words.size()));
+        System.out.println(word);
+        final String correctLetters = makeStringtoLength(word);
         Label wrongLetters = new Label("Wrong letters guess: ");
         Label rightLetters = new Label("Right letters guessed: ");
         wrongLetters.setLayoutY(30);
@@ -60,15 +62,20 @@ public class Game {
             int guessNum;
             @Override
             public void handle(MouseEvent event) {
+                String correct = correctLetters;
                 TextArea textArea = (TextArea)pane.getChildren().get(0);
                 String text = textArea.getText();
+                textArea.clear();
                 if(word.toLowerCase().contains(text.toLowerCase())) {
                     if(rightLettersList.contains(text.toLowerCase()))
                         return;
-                    for(int i = 0; i < word.toCharArray().length; i++){
+                    /*for(int i = 0; i < word.toCharArray().length; i++){
                         if(text.equalsIgnoreCase(String.valueOf(word.toCharArray()[i])))
                             rightLettersList.add(String.valueOf(word.toCharArray()[i]));
-                    }
+                    }*/
+                    correct = findLetters(word,text, String.valueOf(correct));
+                    rightLettersList.clear();
+                    rightLettersList.add(correct);
                     Label right = new Label("");
                     right.setText(rightLettersList.toString().replace("[","").replace("]",""));
                     right.setLayoutY(0);
@@ -143,6 +150,23 @@ public class Game {
         newGame();
     }
 
+    private String makeStringtoLength(String word){
+        StringBuilder spaces = new StringBuilder();
+        for(char c : word.toCharArray())
+            spaces.append("-");
+        return spaces.toString();
+    }
 
+    public static String findLetters(String word, String letter,String foundSoFar){
+        char[] wordArray = word.toCharArray();
+        StringBuilder found = new StringBuilder(foundSoFar);
+        for(int i = 0; i < wordArray.length; i++){
+            if(String.valueOf(wordArray[i]).equalsIgnoreCase(letter)){
+                found.replace(i, i+1,String.valueOf(wordArray[i]));
+            }
+        }
+        return found.toString();
+
+    }
 
 }
