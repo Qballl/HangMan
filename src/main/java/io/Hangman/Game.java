@@ -1,20 +1,21 @@
 package io.Hangman;
 
-import javafx.event.*;
-import javafx.scene.Scene;
+import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
+
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
 
 /**
  * @author Quintin VanBooven
@@ -23,7 +24,7 @@ import java.util.Random;
 public class Game{
 
     private Pane pane;
-    private final static List<String> words = Main.getList();
+    private final static HashMap<String,String> words = Main.getList();
     private final List<String> wrongLettersList = new ArrayList<>();
     private final List<String> rightLettersList = new ArrayList<>();
     private static int guessNum = 0;
@@ -43,12 +44,14 @@ public class Game{
      * Not my best work but does the job more time and I would clean up
      */
     private void newGame() {
+        pane.getChildren().clear();
         System.out.println(words);
         guessNum = 0;
         Random random = new Random();
         wrongLettersList.clear();
         rightLettersList.clear();
-        word = words.get(random.nextInt(words.size()));
+        word = (String) words.keySet().toArray()[random.nextInt(words.size())];
+        //word = words.get(random.nextInt(words.size()));
         System.out.println(word);
         ArrayList<String> correct = new ArrayList<>();
         Label wrongLetters = new Label("Wrong letters guess: ");
@@ -59,15 +62,22 @@ public class Game{
         pane.getChildren().add(right);
         correct.add(makeStringtoLength(word));
         pane.setVisible(true);
-        Button justToMakeItWork = new Button();
-        justToMakeItWork.resize(0,0);
-        justToMakeItWork.setLayoutY(600);
-        justToMakeItWork.setLayoutX(0);
-        pane.getChildren().add(justToMakeItWork);
+        Button hint = new Button("Hint");
+        hint.resize(0,0);
+        hint.setLayoutY(80);
+        Label hintLbl = new Label(words.get(word));
+        hintLbl.setLayoutY(110);
+        hint.setOnMouseClicked( e ->{
+            if(!pane.getChildren().contains(hintLbl))
+                pane.getChildren().add(hintLbl);
+        });
+        pane.getChildren().add(hint);
         Label info = new Label("Press a key to guess");
         info.setLayoutY(60);
         pane.getChildren().add(info);
         pane.setOnKeyPressed(event -> {
+            if(guessNum>=6)
+                return;
             String text = event.getText();
             if(text.equalsIgnoreCase(" "))
                 return;
@@ -92,11 +102,11 @@ public class Game{
                     label.setLayoutX(150);
                     label.setLayoutY(300);
                     pane.getChildren().add(label);
+                    guessNum = -1;
                 }
             }
             else{
-                if(guessNum>6)
-                    return;
+
                 if(wrongLettersList.contains(text.toLowerCase()))
                     return;
                 wrongLettersList.add(text.toLowerCase());
@@ -106,25 +116,27 @@ public class Game{
                 wrong.setLayoutX(115);
                 pane.getChildren().add(wrong);
                 switch (guessNum){
+                    case -1:
+                        if(event.getCode().isWhitespaceKey())
+                            newGame();
+                        return;
                     case 0:
-                        pane.getChildren().add(Man.drawHead());
+                        pane.getChildren().add(7,Man.drawHead());
                         break;
                     case 1:
-                        pane.getChildren().add(Man.drawBody());
+                        pane.getChildren().add(8,Man.drawBody());
                         break;
                     case 2:
-                        pane.getChildren().add(Man.drawLeftArm());
+                        pane.getChildren().add(9,Man.drawLeftArm());
                         break;
                     case 3:
-                        pane.getChildren().add(Man.drawRightArm());
+                        pane.getChildren().add(10,Man.drawRightArm());
                         break;
                     case 4:
-                        pane.getChildren().add(Man.drawLeftLeg());
+                        pane.getChildren().add(11,Man.drawLeftLeg());
                         break;
                     case 5:
-                        pane.getChildren().add(Man.drawRightLeg());
-                        break;
-                    case 6:
+                        pane.getChildren().add(12,Man.drawRightLeg());
                         Label label = new Label("YOU LOST THE\n WORD WAS "+word.toUpperCase());
                         label.setFont(Font.font("BOLD", FontWeight.BOLD,20));
                         label.setLayoutX(150);
@@ -200,7 +212,7 @@ public class Game{
                 case 5:
                     pane.getChildren().add(Man.drawRightLeg());
                     break;
-                case 6:
+                case 6:,
                     Label label = new Label("YOU LOST THE\n WORD WAS "+word.toUpperCase());
                     label.setFont(Font.font("BOLD", FontWeight.BOLD,20));
                     label.setLayoutX(150);
@@ -218,6 +230,10 @@ public class Game{
      */
     public void startGame(){
         newGame();
+    }
+
+    private void clearBoard(Pane pane){
+        pane.getChildren().clear();
     }
 
     private String makeStringtoLength(String word){

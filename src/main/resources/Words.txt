@@ -1,54 +1,55 @@
-java
-apple 
-coding
-monitor
-phone
-bunny
-minecraft 
-programming
-computer
-laptop
-metal
-thrash
-correction
-keep
-battery
-overall
-war
-day
-constitutional
-neglect
-economics
-galaxy
-nose
-shower
-shop
-progress
-wreck
-lifestyle
-charismatic
-wear
-section
-fool around
-deliver
-satisfaction
-company
-season
-refrigerator
-nut
-plagiarize
-rest
-energy
-spoil
-earthquake
-kick
-ignorance
-knowledge
-set
-node
-wire
-failure
-original
+java|The best programming language
+apple|A delicious red fruit
+coding|A fun hobby that can lead to a high paying job
+monitor|To keep an eye on or a word for a screen
+phone|Used to be useful now used mostly for games and passing time
+bunny|A soft fluffy mammal sometimes kept as a pet and has cute tail
+minecraft|The best game made with java
+programming|A fun hobby that can lead to a high paying job
+computer|A very complex calculator that can play games and be used for productive stuff too
+laptop|A portable very complex calculator the can play games and be used for productive stuff too
+metal|A strong building metal makes a nice noise when hit
+thrash|Beat repeatably with a stick or whip also it is the term for the best subgenere metal
+correction|To fix something wrong
+keep|Preserve, maintain
+battery|A portable power source
+overall|To take everything into account
+war|What is it good for, A fight between opposing powers
+day|There is never enough time in this
+constitutional|Relating to an established set of principles governing a state
+neglect|To not pay attention to something
+economics|The branch of knowledge concerned with the production, consumption, and transfer of wealth
+galaxy|A system of millions or billions of stars, together with gas and dust, held together by gravitational attraction
+nose|A part of the human face
+shower|An enclosure in which a person stands under a spray of water to wash
+shop|A building where you buy things or the act of buying things
+progress|Move forward or onward in space or time
+wreck|Destroy or severely damage
+lifestyle|How someone lives
+charismatic|Exercising a compelling charm which inspires devotion in others
+wear|Destroy by friction or use
+section|A portion of something
+fool|A silly person
+around|Nearby here there everywhere
+deliver|To bring or hand over
+satisfaction|To be content or feel happy
+company|A group of people, A business
+season|Four of these in a year, Also means to make food taste good
+refrigerator|A wonderful thing that helps keep food longer
+nut|A fruit consisting of a hard or tough shell around an edible kernel
+plagiarize|Take someone else's ideas or work and passing it as your own
+rest|A very important thing a lot of people don't get often at night
+energy|How things get powered
+spoil|Ruining something for someone or what happens to food
+earthquake|Caused by plate tectonics
+kick|Hit with you foot
+ignorance|The most prominent trait Trump exhibits
+knowledge|Something Trump does not have
+set|Place something
+node|A point at which lines or pathways intersect or branch; a central or connecting point
+wire|A piece of metal to move electricity
+failure|When something doesn't go according to plan
+original|To be the first with something
 access
 head
 robot
@@ -115,7 +116,8 @@ patience
 invasion
 fund
 pat
-mail carrier
+mail
+carrier
 sermon
 exception
 spit

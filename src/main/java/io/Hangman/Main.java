@@ -7,7 +7,9 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Quintin VanBooven
@@ -30,13 +32,19 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static List<String> getList(){
-        List<String> words = new ArrayList<>();
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(Main.class.getClassLoader().getResourceAsStream("Words.txt")))){
-            reader.lines().forEach(words::add);
-        }catch (IOException  e){
-            e.printStackTrace();
-        }
+    public static HashMap<String, String> getList(){
+        //List<String> words = new ArrayList<>();
+        HashMap<String, String> words = new HashMap<>();
+        try {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(Main.class.getClassLoader().getResourceAsStream("Words.txt")))) {
+                reader.lines().forEach(s -> {
+                    String[] parts = s.split("\\|");
+                    words.put(parts[0], parts[1]);
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }catch (Exception e){}
         return words;
     }
 }
